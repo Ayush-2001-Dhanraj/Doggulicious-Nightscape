@@ -7,7 +7,7 @@ export class Player {
     this.height = 91.3;
     this.image = player;
     this.x = 0;
-    this.y = this.game.height - this.height;
+    this.y = this.game.height - this.height - this.game.gameMargin;
     this.frameX = 0;
     this.frameY = 0;
     this.maxFrames = 0;
@@ -37,8 +37,6 @@ export class Player {
 
     this.x += this.speed;
 
-    // movements for y
-    // if (input.includes("ArrowUp") && this.onGround()) this.vy = -30;
     this.y += this.vy;
     if (!this.onGround()) this.vy += this.weight;
     else this.vy = 0;
@@ -69,11 +67,12 @@ export class Player {
     );
   }
   onGround() {
-    return this.y >= this.game.height - this.height;
+    return this.y >= this.game.height - this.height - this.game.gameMargin;
   }
-  setState(stateIndex) {
+  setState(stateIndex, speed) {
     this.currentState = this.states[stateIndex];
     this.frameX = 0;
+    this.game.speed = this.game.maxSpeed * speed;
     this.currentState.enter();
   }
 }
