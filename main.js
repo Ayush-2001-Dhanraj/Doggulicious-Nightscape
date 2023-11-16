@@ -1,6 +1,7 @@
 /** @type {HTMLCanvasElement} */
 
 import { Player } from "./player.js";
+import { InputHandler } from "./input.js";
 
 window.addEventListener("load", () => {
   const canvas = document.getElementById("canvas");
@@ -13,9 +14,10 @@ window.addEventListener("load", () => {
       this.width = width;
       this.height = height;
       this.player = new Player(this);
+      this.input = new InputHandler();
     }
-    update() {
-      this.player.update();
+    update(deltaTime) {
+      this.player.update(this.input.keys, deltaTime);
     }
     draw(context) {
       this.player.draw(context);
@@ -29,7 +31,7 @@ window.addEventListener("load", () => {
     const deltaTime = timestamp - lastTime;
     lastTime = timestamp;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    game.update();
+    game.update(deltaTime);
     game.draw(ctx);
     requestAnimationFrame(animate);
   }
