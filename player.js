@@ -28,6 +28,9 @@ export class Player {
     this.frameTimer = 0;
   }
   update(input, deltaTime) {
+    // check for collisions
+    this.checkCollisions();
+
     this.currentState.handleInput(input);
 
     // movements for x
@@ -54,6 +57,8 @@ export class Player {
     } else this.frameTimer += deltaTime;
   }
   draw(context) {
+    if (this.game.debug)
+      context.strokeRect(this.x, this.y, this.width, this.height);
     context.drawImage(
       this.image,
       this.frameX * this.width,
@@ -74,5 +79,19 @@ export class Player {
     this.frameX = 0;
     this.game.speed = this.game.maxSpeed * speed;
     this.currentState.enter();
+  }
+  checkCollisions() {
+    this.game.enemies.forEach((enemy) => {
+      if (
+        this.x < enemy.x + enemy.width &&
+        this.x + this.width > enemy.x &&
+        this.y < enemy.y + enemy.height &&
+        this.y + this.height > enemy.y
+      ) {
+        // collision
+        enemy.markedForRemoval = true;
+        this.game.score += 1;
+      }
+    });
   }
 }
