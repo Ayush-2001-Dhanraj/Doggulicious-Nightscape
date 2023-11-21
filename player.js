@@ -1,4 +1,14 @@
-import { Sitting, Running, Jumping, Falling, Rolling } from "./states.js";
+import { CollisionAnimation } from "./collisionAnimation.js";
+import { FloatingMessage } from "./floatingMessage.js";
+import {
+  Sitting,
+  Running,
+  Jumping,
+  Falling,
+  Rolling,
+  Diving,
+  Dizzy,
+} from "./states.js";
 
 export class Player {
   constructor(game) {
@@ -21,6 +31,8 @@ export class Player {
       new Jumping(this.game),
       new Falling(this.game),
       new Rolling(this.game),
+      new Diving(this.game),
+      new Dizzy(this.game),
     ];
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
@@ -33,20 +45,32 @@ export class Player {
     this.currentState.handleInput(input);
 
     // movements for x
-    if (input.includes("ArrowRight")) this.speed = this.maxSpeed;
-    else if (input.includes("ArrowLeft")) this.speed = -this.maxSpeed;
+    if (input.includes("ArrowRight") && this.currentState !== this.states[6])
+      this.speed = this.maxSpeed;
+    else if (
+      input.includes("ArrowLeft") &&
+      this.currentState !== this.states[6]
+    )
+      this.speed = -this.maxSpeed;
     else this.speed = 0;
 
     this.x += this.speed;
-
-    this.y += this.vy;
-    if (!this.onGround()) this.vy += this.weight;
-    else this.vy = 0;
 
     // boundaries for x movement
     if (this.x < 0) this.x = 0;
     if (this.x > this.game.width - this.width)
       this.x = this.game.width - this.width;
+
+    // movement for y
+
+    this.y += this.vy;
+    if (!this.onGround()) this.vy += this.weight;
+    else this.vy = 0;
+
+    // boundary for y
+
+    if (this.y > this.game.height - this.game.gameMargin - this.height)
+      this.y = this.game.height - this.game.gameMargin - this.height;
 
     // sprite animations
     if (this.frameTimer > this.frameInterval) {
@@ -89,7 +113,26 @@ export class Player {
       ) {
         // collision
         enemy.markedForRemoval = true;
-        this.game.score += 1;
+        this.game.collisions.unshift(
+          new CollisionAnimation(
+            this.game,
+            enemy.x + enemy.width * 0.5,
+            enemy.y + enemy.height * 0.5
+          )
+        );
+        if (
+          this.currentState == this.states[4] ||
+          this.currentState == this.states[5]
+        ) {
+          this.game.score += 1;
+          this.game.floatingMessages.unshift(
+            new FloatingMessage("+1", enemy.x, enemy.y, 0, 0)
+          );
+        } else {
+          this.setState(6, 0);
+          this.game.lives -= 1;
+          if (this.game.lives <= 0) this.game.gameOver = true;
+        }
       }
     });
   }

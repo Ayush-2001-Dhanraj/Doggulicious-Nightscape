@@ -9,7 +9,7 @@ import { UI } from "./ui.js";
 window.addEventListener("load", () => {
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
-  canvas.width = 500;
+  canvas.width = 1300;
   canvas.height = 500;
 
   class Game {
@@ -24,6 +24,8 @@ window.addEventListener("load", () => {
       this.input = new InputHandler(this);
       this.enemies = [];
       this.particles = [];
+      this.collisions = [];
+      this.floatingMessages = [];
       this.enemyTimer = 0;
       this.enemySponInterval = 1000;
       this.debug = true;
@@ -33,8 +35,16 @@ window.addEventListener("load", () => {
       this.player.currentState = this.player.states[0];
       this.player.currentState.enter();
       this.maxParticles = 200;
+      this.timer = 80000;
+      this.gameOver = false;
+      this.lives = 5;
     }
     update(deltaTime) {
+      if (this.timer < 0) {
+        this.timer = 0;
+        this.gameOver = true;
+      } else this.timer -= deltaTime;
+
       this.background.update();
       this.player.update(this.input.keys, deltaTime);
 
@@ -43,19 +53,29 @@ window.addEventListener("load", () => {
         this.addEnemy();
       } else this.enemyTimer += deltaTime;
 
-      this.enemies.forEach((enemy) => {
-        enemy.update(deltaTime);
-        if (enemy.markedForRemoval)
-          this.enemies.splice(this.enemies.indexOf(enemy), 1);
-      });
+      // update elements on canvas
 
-      this.particles.forEach((particle, index) => {
-        particle.update();
-        if (particle.markedForRemoval) this.particles.splice(index, 1);
-      });
+      this.enemies.forEach((enemy) => enemy.update(deltaTime));
+
+      this.particles.forEach((particle) => particle.update());
+
+      this.collisions.forEach((col) => col.update(deltaTime));
+
+      this.floatingMessages.forEach((fm) => fm.update());
+
+      // remove removable elements
+
+      this.enemies = this.enemies.filter((e) => !e.markedForRemoval);
+      this.particles = this.particles.filter((p) => !p.markedForRemoval);
+      this.collisions = this.collisions.filter((c) => !c.markedForRemoval);
+      this.floatingMessages = this.floatingMessages.filter(
+        (fm) => !fm.markedForRemoval
+      );
+
+      // limit max particles on the screen
 
       if (this.particles.length > this.maxParticles)
-        this.particles.splice(0, this.maxParticles);
+        this.particles.length = this.maxParticles;
     }
     draw(context) {
       this.background.draw(context);
@@ -63,6 +83,9 @@ window.addEventListener("load", () => {
 
       this.enemies.forEach((enemy) => enemy.draw(context));
       this.particles.forEach((particle) => particle.draw(context));
+      this.collisions.forEach((col) => col.draw(context));
+      this.floatingMessages.forEach((fm) => fm.draw(context));
+
       this.UI.draw(context);
     }
     addEnemy() {
@@ -82,7 +105,7 @@ window.addEventListener("load", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.update(deltaTime);
     game.draw(ctx);
-    requestAnimationFrame(animate);
+    if (!game.gameOver) requestAnimationFrame(animate);
   }
 
   animate(0);
