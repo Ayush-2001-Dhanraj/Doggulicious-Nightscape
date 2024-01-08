@@ -26,6 +26,27 @@
     <img src="/assests/fire.png" id="fire" />
     <img src="/assests/boom.png" id="boom" />
     <img src="/assests/lives.png" id="live" />
+    <div id="introContainer">
+      <div class="introModal">
+        <fieldset>
+          <legend>Select Game Mode:</legend>
+          <div>
+            <label for="easy">Easy</label>
+            <input type="radio" name="mode" id="easy" value="0" checked />
+          </div>
+          <div>
+            <label for="medium">Medium</label>
+            <input type="radio" name="mode" id="medium" value="1" />
+          </div>
+          <div>
+            <label for="hard">Hard</label>
+            <input type="radio" name="mode" id="hard" value="2" />
+          </div>
+        </fieldset>
+        <p id="modeInfo"></p>
+        <button type="button" id="startGameBtn">Start</button>
+      </div>
+    </div>
     <script type="module" src="main.js"></script>
   </body>
 </html>

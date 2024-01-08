@@ -126,7 +126,7 @@ export class Player {
         ) {
           this.game.score += 1;
           this.game.floatingMessages.unshift(
-            new FloatingMessage("+1", enemy.x, enemy.y, 0, 0)
+            new FloatingMessage("+1 🦴", enemy.x, enemy.y, 0, 0)
           );
         } else {
           this.setState(6, 0);

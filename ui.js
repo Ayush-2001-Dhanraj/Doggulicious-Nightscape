@@ -16,11 +16,11 @@ export class UI {
     context.textAlign = "left";
     context.fillStyle = this.game.fontColor;
     // draw
-    context.fillText("Score: " + this.game.score, 20, 50);
+    context.fillText("🦴: " + this.game.score, 20, 50);
 
     // timer display
     context.font = this.fontSize * 0.8 + "px " + this.fontFamily;
-    context.fillText("Time: " + (this.game.timer * 0.001).toFixed(1), 20, 80);
+    context.fillText("🕕: " + (this.game.timer * 0.001).toFixed(1), 20, 80);
 
     // lives display
     for (let i = 0; i < this.game.lives; i++)
@@ -57,4 +57,12 @@ export class UI {
     }
     context.restore();
   }
+}
+
+export class IntroModal {
+  constructor(game) {
+    this.game = game;
+  }
+  showModal() {}
+  hideModal() {}
 }

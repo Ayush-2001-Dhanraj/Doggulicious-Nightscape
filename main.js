@@ -6,6 +6,8 @@ import { Background } from "./background.js";
 import { FlyingEnemy, ClimbingEnemy, GroundEnemy } from "./enemy.js";
 import { UI } from "./ui.js";
 
+const gameModeInfoTxt = ["Slowest speed", "Faster speed", "Fastest game speed"];
+
 window.addEventListener("load", () => {
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
@@ -38,8 +40,11 @@ window.addEventListener("load", () => {
       this.timer = 80000;
       this.gameOver = false;
       this.lives = 5;
+      this.pause = true;
+      this.mode = 0;
     }
     update(deltaTime) {
+      if (this.pause) return;
       if (this.timer < 0) {
         this.timer = 0;
         this.gameOver = true;
@@ -105,8 +110,25 @@ window.addEventListener("load", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.update(deltaTime);
     game.draw(ctx);
-    if (!game.gameOver) requestAnimationFrame(animate);
+    if (!game.gameOver && !game.pause) requestAnimationFrame(animate);
   }
 
-  animate(0);
+  const startGameBtn = document.getElementById("startGameBtn");
+  const gameMode = document.getElementsByName("mode");
+  const modeInfo = document.getElementById("modeInfo");
+  modeInfo.textContent = gameModeInfoTxt[0];
+  const introContainer = document.getElementById("introContainer");
+
+  gameMode.forEach(function (radioButton) {
+    radioButton.addEventListener("change", function () {
+      game.mode = this.value;
+      modeInfo.textContent = gameModeInfoTxt[this.value];
+    });
+  });
+
+  startGameBtn.addEventListener("click", () => {
+    game.pause = false;
+    introContainer.style.display = "none";
+    animate(0);
+  });
 });

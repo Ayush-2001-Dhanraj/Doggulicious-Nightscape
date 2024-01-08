@@ -5,7 +5,7 @@
 }
 
 #canvas {
-    border: 5px solid #000;
+    /* border: 1px solid #000; */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -17,4 +17,52 @@
 
 img {
     display: none;
+}
+
+#introContainer {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.introModal {
+    width: 40%;
+    max-width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.introModal fieldset {
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-family: 'Creepster';
+}
+
+.introModal #modeInfo {
+    font-family: 'Creepster';
+    text-align: center;
+
+}
+
+.introModal fieldset label {
+    font-size: 1.2rem;
+}
+
+#startGameBtn {
+    padding: 10px 40px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 8px;
+    margin: 10px auto;
+    display: block;
 }

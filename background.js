@@ -1,12 +1,12 @@
 class Layer {
-  constructor(game, width, height, speedModifier, image) {
+  constructor(game, width, height, speedModifier, image, x, y) {
     this.game = game;
     this.width = width;
     this.height = height;
     this.speedModifier = speedModifier;
     this.image = image;
-    this.x = 0;
-    this.y = 0;
+    this.x = x || 0;
+    this.y = y || 0;
   }
   update() {
     if (this.x < -this.width) this.x = 0;
