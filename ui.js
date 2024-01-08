@@ -58,11 +58,3 @@ export class UI {
     context.restore();
   }
 }
-
-export class IntroModal {
-  constructor(game) {
-    this.game = game;
-  }
-  showModal() {}
-  hideModal() {}
-}
