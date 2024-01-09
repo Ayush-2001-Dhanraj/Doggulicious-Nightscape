@@ -112,6 +112,7 @@ export class Player {
         this.y + this.height > enemy.y
       ) {
         // collision
+        // remove enemy player collided with
         enemy.markedForRemoval = true;
         this.game.collisions.unshift(
           new CollisionAnimation(
@@ -120,6 +121,8 @@ export class Player {
             enemy.y + enemy.height * 0.5
           )
         );
+        // if player was in scoring state
+        // increase score
         if (
           this.currentState == this.states[4] ||
           this.currentState == this.states[5]
@@ -128,10 +131,16 @@ export class Player {
           this.game.floatingMessages.unshift(
             new FloatingMessage("+1 🦴", enemy.x, enemy.y, 0, 0)
           );
-        } else {
+        }
+        // player collided but not in a scoring state
+        // decrese player life
+        else {
           this.setState(6, 0);
           this.game.lives -= 1;
           if (this.game.lives <= 0) this.game.gameOver = true;
+          this.game.floatingMessages.unshift(
+            new FloatingMessage("-1 ❤", enemy.x, enemy.y, 0, 0)
+          );
         }
       }
     });
