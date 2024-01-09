@@ -19,6 +19,7 @@ window.addEventListener("load", () => {
       this.width = width;
       this.height = height;
       this.gameMargin = 80;
+      this.mode = 0;
       this.speed = 0;
       this.maxSpeed = 3;
       this.background = new Background(this);
@@ -41,7 +42,6 @@ window.addEventListener("load", () => {
       this.gameOver = false;
       this.lives = 5;
       this.pause = true;
-      this.mode = 0;
     }
     update(deltaTime) {
       if (this.pause) return;
@@ -122,6 +122,7 @@ window.addEventListener("load", () => {
   gameMode.forEach(function (radioButton) {
     radioButton.addEventListener("change", function () {
       game.mode = this.value;
+      game.maxSpeed = parseInt(this.value * 4) || 5;
       modeInfo.textContent = gameModeInfoTxt[this.value];
     });
   });
