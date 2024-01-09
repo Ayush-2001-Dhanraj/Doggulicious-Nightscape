@@ -14,6 +14,8 @@ window.addEventListener("load", () => {
   canvas.width = 1300;
   canvas.height = 500;
 
+  let pause = true;
+
   class Game {
     constructor(width, height) {
       this.width = width;
@@ -30,25 +32,22 @@ window.addEventListener("load", () => {
       this.collisions = [];
       this.floatingMessages = [];
       this.enemyTimer = 0;
-      this.enemySponInterval = 1000;
-      this.debug = true;
+      this.enemySponInterval = 250;
+      this.debug = false;
       this.score = 0;
       this.fontColor = "black";
       this.UI = new UI(this);
       this.player.currentState = this.player.states[0];
       this.player.currentState.enter();
       this.maxParticles = 200;
-      this.timer = 80000;
+      this.timer = 50;
       this.gameOver = false;
       this.lives = 5;
       this.pause = true;
+      this.winningScore = 75;
     }
     update(deltaTime) {
       if (this.pause) return;
-      if (this.timer < 0) {
-        this.timer = 0;
-        this.gameOver = true;
-      } else this.timer -= deltaTime;
 
       this.background.update();
       this.player.update(this.input.keys, deltaTime);
@@ -99,18 +98,61 @@ window.addEventListener("load", () => {
       else if (this.speed > 0) this.enemies.push(new ClimbingEnemy(this));
       this.enemies.push(new FlyingEnemy(this));
     }
+    reset() {
+      this.background = new Background(this);
+      this.player = new Player(this);
+      this.input = new InputHandler(this);
+      this.enemies = [];
+      this.particles = [];
+      this.collisions = [];
+      this.floatingMessages = [];
+      this.enemyTimer = 0;
+      this.enemySponInterval = 1000;
+      this.score = 0;
+      this.fontColor = "black";
+      this.UI = new UI(this);
+      this.player.currentState = this.player.states[0];
+      this.player.currentState.enter();
+      this.maxParticles = 200;
+      this.timer = 50;
+      this.gameOver = false;
+      this.lives = 5;
+      this.pause = false;
+    }
   }
 
   const game = new Game(canvas.width, canvas.height);
   let lastTime = 0;
 
+  let startTime = new Date().getTime();
+
   function animate(timestamp) {
+    var endTime = new Date().getTime();
+    var timeDifference = endTime - startTime;
+    var secondsElapsed = timeDifference / 1000;
+    const decreaseBy = parseInt(game.mode) * 2 || 1;
+    if (secondsElapsed >= 1) {
+      if (game.timer < 0) {
+        game.timer = 0;
+        game.gameOver = true;
+      } else game.timer -= decreaseBy;
+
+      startTime = endTime;
+    }
+
     const deltaTime = timestamp - lastTime;
     lastTime = timestamp;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.update(deltaTime);
     game.draw(ctx);
-    if (!game.gameOver && !game.pause) requestAnimationFrame(animate);
+    if (!game.gameOver && !game.pause && !pause) requestAnimationFrame(animate);
+  }
+
+  function restart() {
+    game.reset();
+    pause = false;
+    lastTime = 0;
+    animate(0);
   }
 
   const startGameBtn = document.getElementById("startGameBtn");
@@ -122,14 +164,14 @@ window.addEventListener("load", () => {
   gameMode.forEach(function (radioButton) {
     radioButton.addEventListener("change", function () {
       game.mode = this.value;
+      pause = true;
       game.maxSpeed = parseInt(this.value * 4) || 5;
       modeInfo.textContent = gameModeInfoTxt[this.value];
     });
   });
 
   startGameBtn.addEventListener("click", () => {
-    game.pause = false;
     introContainer.style.display = "none";
-    animate(0);
+    restart();
   });
 });

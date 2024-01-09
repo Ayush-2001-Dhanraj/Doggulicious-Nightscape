@@ -21,7 +21,7 @@ export class UI {
 
     // timer display
     context.font = this.fontSize * 0.8 + "px " + this.fontFamily;
-    context.fillText("🕕: " + (this.game.timer * 0.001).toFixed(1), 20, 80);
+    context.fillText("🕕: " + this.game.timer, 20, 80);
 
     // lives display
     for (let i = 0; i < this.game.lives; i++)
@@ -30,7 +30,7 @@ export class UI {
     if (this.game.gameOver) {
       context.font = this.fontSize * 2 + "px " + this.fontFamily;
       context.textAlign = "center";
-      if (this.game.score > 5) {
+      if (this.game.score >= this.game.winningScore) {
         context.fillText(
           "Boo---yahhh!!!!! ",
           this.game.width * 0.5,
