@@ -18,8 +18,10 @@ export class CollisionAnimation {
     this.played = false;
     this.hit = new Audio();
     this.hit.src = "/assests/hit.wav";
+    this.hit.volume = 0.05;
     this.dizzy = new Audio();
     this.dizzy.src = "/assests/dizzy.wav";
+    this.dizzy.volume = 0.005;
   }
   update(deltaTime) {
     this.x -= this.game.speed;
