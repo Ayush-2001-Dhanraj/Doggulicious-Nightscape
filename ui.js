@@ -5,6 +5,7 @@ export class UI {
     this.fontFamily = "Creepster";
   }
   draw(context) {
+    if (this.game.pause) return;
     context.save();
     context.shadowOffsetX = 2;
     context.shadowOffsetY = 2;

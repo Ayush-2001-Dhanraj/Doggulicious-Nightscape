@@ -27,6 +27,17 @@
     <img src="/assests/boom.png" id="boom" />
     <img src="/assests/lives.png" id="live" />
     <div id="introContainer">
+      <div id="toDoSection" class="noteSections">
+        <p class="txt">Collect atleast 100 Bones in the given time</p>
+      </div>
+      <div id="ribbonSection" class="noteSections"></div>
+      <div id="controlsInfo" class="noteSections">
+        <div>Left <span class="arrow">⬅</span></div>
+        <div>Right <span class="arrow">➡</span></div>
+        <div>Jump <span class="arrow">⬆</span></div>
+        <div>Jump Dive <span class="arrow">⬆⬇</span></div>
+        <div>Attack <span class="arrow">A</span></div>
+      </div>
       <div class="introModal">
         <fieldset>
           <legend>Select Game Mode:</legend>
@@ -42,9 +53,12 @@
             <label for="hard">Hard</label>
             <input type="radio" name="mode" id="hard" value="2" />
           </div>
+          <p id="modeInfo"></p>
         </fieldset>
-        <p id="modeInfo"></p>
-        <button type="button" id="startGameBtn">Start</button>
+
+        <button type="button" id="startGameBtn" class="modalBtns">
+          Start Game
+        </button>
       </div>
     </div>
     <script type="module" src="main.js"></script>
