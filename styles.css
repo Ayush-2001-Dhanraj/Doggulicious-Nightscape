@@ -87,6 +87,10 @@ img {
     font-weight: 500;
 }
 
+#toDoSection .sm-txt {
+    font-size: smaller;
+}
+
 #controlsInfo {
     left: 50%;
     bottom: 0;
@@ -118,14 +122,15 @@ img {
     padding: 5px;
     border-radius: 50%;
     border: 2px solid #000;
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 10px;
 }
+
 
 .introModal fieldset {
     padding: 10px;

@@ -28,7 +28,7 @@ export class Sitting extends State {
   handleInput(input) {
     if (input.includes("ArrowLeft") || input.includes("ArrowRight"))
       this.game.player.setState(states.RUNNING, 1);
-    else if (input.includes("a")) this.game.player.setState(states.ROLLING, 2);
+    else if (input.includes(" ")) this.game.player.setState(states.ROLLING, 2);
   }
 }
 
@@ -52,7 +52,7 @@ export class Running extends State {
       this.game.player.setState(states.SITTING, 0);
     else if (input.includes("ArrowUp"))
       this.game.player.setState(states.JUMPING, 1);
-    else if (input.includes("a")) this.game.player.setState(states.ROLLING, 2);
+    else if (input.includes(" ")) this.game.player.setState(states.ROLLING, 2);
   }
 }
 
@@ -68,7 +68,7 @@ export class Jumping extends State {
   handleInput(input) {
     if (!this.game.player.onGround() && this.game.player.vy >= 0)
       this.game.player.setState(states.FALLING, 1);
-    else if (input.includes("a")) this.game.player.setState(states.ROLLING, 2);
+    else if (input.includes(" ")) this.game.player.setState(states.ROLLING, 2);
     else if (input.includes("ArrowDown"))
       this.game.player.setState(states.DIVING, 0);
   }
@@ -106,12 +106,12 @@ export class Rolling extends State {
         this.game.player.y + this.game.player.height * 0.5
       )
     );
-    if (!input.includes("a") && this.game.player.onGround())
+    if (!input.includes(" ") && this.game.player.onGround())
       this.game.player.setState(states.RUNNING, 1);
-    else if (!input.includes("a") && !this.game.player.onGround())
+    else if (!input.includes(" ") && !this.game.player.onGround())
       this.game.player.setState(states.FALLING, 1);
     else if (
-      input.includes("a") &&
+      input.includes(" ") &&
       input.includes("ArrowUp") &&
       this.game.player.onGround()
     ) {
@@ -149,7 +149,7 @@ export class Diving extends State {
           )
         );
       }
-    } else if (input.includes("a") && this.game.player.onGround())
+    } else if (input.includes(" ") && this.game.player.onGround())
       this.game.player.setState(states.ROLLING, 2);
   }
 }
