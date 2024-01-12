@@ -189,10 +189,22 @@ img {
     font-size: 1.5rem;
     z-index: 100;
     position: relative;
+
+    @media screen and (max-width: 430px) {
+        width: 100%;
+    }
 }
 
 .introModal fieldset div {
     padding: 10px;
+
+    @media screen and (max-width: 430px) {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 }
 
 .introModal #modeInfo {

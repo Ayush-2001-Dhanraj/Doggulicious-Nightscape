@@ -7,7 +7,7 @@ import { FlyingEnemy, ClimbingEnemy, GroundEnemy } from "./enemy.js";
 import { UI } from "./ui.js";
 import { introAnimation } from "./introAnimations.js";
 
-const gameModeInfoTxt = ["Slowest speed", "Faster speed", "Fastest game speed"];
+const gameModeInfoTxt = ["Slowest speed", "Faster speed", "Fastest speed"];
 
 window.addEventListener("load", () => {
   // main game canvas
