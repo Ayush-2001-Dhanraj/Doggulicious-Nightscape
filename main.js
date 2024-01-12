@@ -188,5 +188,5 @@ window.addEventListener("load", () => {
     restart();
   });
 
-  introAnimation();
+  introAnimation(game);
 });

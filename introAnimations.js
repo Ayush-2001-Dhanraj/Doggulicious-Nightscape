@@ -1,12 +1,14 @@
 import { FlyingEnemy } from "./enemy.js";
 
-export const introAnimation = () => {
+export const introAnimation = (game) => {
   // info modal canvas(s)
   const upperCanvas = document.getElementById("upperCanvas");
+  const middleCanvas = document.getElementById("middleCanvas");
   const lowerCanvas = document.getElementById("lowerCanvas");
 
   // info modal ctx(s)
   const upperCtx = upperCanvas.getContext("2d");
+  const middleCtx = middleCanvas.getContext("2d");
   const lowerCtx = lowerCanvas.getContext("2d");
 
   const playerImage = player;
@@ -14,6 +16,7 @@ export const introAnimation = () => {
   const playerHeight = 91.3;
   const playerSizeModifier = 0.5;
   let frameX = 0;
+  let frameXSit = 0;
   let frameY = 3;
   let x = 0;
   let speedX = Math.random() * 1 + 1;
@@ -33,7 +36,7 @@ export const introAnimation = () => {
     // animate player
 
     // movement along X axis
-    x += speedX;
+    x += speedX + game.mode * 0.7;
 
     if (x >= upperCanvas.width) {
       x = -playerwidth;
@@ -43,14 +46,18 @@ export const introAnimation = () => {
     if (frameTimer > frameInterval) {
       frameTimer = 0;
       if (frameX >= maxFrames) frameX = 0;
-      else frameX += 1;
+      else if (frameXSit >= 4) frameXSit = 0;
+      else {
+        frameX += 1;
+        frameXSit += 1;
+      }
     } else frameTimer += deltaTime;
 
     // add new enemy
     if (enemyTimer > enemySponInterval) {
       enemyTimer = 0;
       const enemyCanvasData = {
-        speed: Math.random() * 0.5 + 0.1,
+        speed: Math.random() * 0.5 + 0.1 + game.mode * 0.7,
         debug: false,
         width: lowerCanvas.width,
         height: lowerCanvas.height * 0.5,
@@ -60,11 +67,16 @@ export const introAnimation = () => {
       if (window.innerWidth < 430) {
         enemySizeModifier = Math.random() * 0.5 + 0.5;
       }
-
       enemies.push(new FlyingEnemy(enemyCanvasData, enemySizeModifier));
     } else enemyTimer += deltaTime;
 
+    enemies.forEach((enemy) => enemy.update(deltaTime));
+    enemies = enemies.filter((e) => !e.markedForRemoval);
+
     upperCtx.clearRect(0, 0, upperCanvas.width, upperCanvas.height);
+    middleCtx.clearRect(0, 0, middleCanvas.width, middleCanvas.height);
+    lowerCtx.clearRect(0, 0, lowerCanvas.width, lowerCanvas.height);
+
     upperCtx.drawImage(
       playerImage,
       frameX * playerwidth,
@@ -76,11 +88,17 @@ export const introAnimation = () => {
       playerwidth * playerSizeModifier,
       playerHeight * playerSizeModifier
     );
-    lowerCtx.clearRect(0, 0, upperCanvas.width, upperCanvas.height);
-
-    enemies.forEach((enemy) => enemy.update(deltaTime));
-    enemies = enemies.filter((e) => !e.markedForRemoval);
-
+    middleCtx.drawImage(
+      playerImage,
+      frameXSit * playerwidth,
+      5 * playerHeight,
+      playerwidth,
+      playerHeight,
+      middleCanvas.width * 0.5 - playerwidth * 0.5,
+      upperCanvas.height - playerHeight,
+      playerwidth,
+      playerHeight
+    );
     enemies.forEach((enemy) => enemy.draw(lowerCtx));
 
     // animate enemies

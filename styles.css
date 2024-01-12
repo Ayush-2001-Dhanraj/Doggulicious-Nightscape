@@ -7,6 +7,9 @@
 body {
     background-color: rgba(0, 0, 0, 0.8);
     font-family: 'Creepster';
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 }
 
 #canvas {
@@ -34,7 +37,7 @@ img {
 .introModal {
     width: 40%;
     max-width: 100%;
-    padding: 10px;
+    padding: 10px 10px 20px 10px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
@@ -92,12 +95,13 @@ img {
 
 #toDoSection {
     left: 50%;
-    top: 10%;
+    top: 30%;
     width: 30%;
     transform: translate(-50%, -50%);
     background-color: #fff;
     padding: 10px;
     border-radius: 8px;
+    position: relative;
 
     @media screen and (max-width: 430px) {
         width: 70%;
@@ -111,6 +115,18 @@ img {
 
 #toDoSection .sm-txt {
     font-size: smaller;
+}
+
+#middleCanvas {
+    position: absolute;
+    height: 100px;
+    bottom: 41px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    @media screen and (max-width: 1024px) {
+        bottom: 60px;
+    }
 }
 
 #controlsInfo {
@@ -127,7 +143,7 @@ img {
     border: 1px solid #000;
 
     @media screen and (max-width: 430px) {
-        width: 75%;
+        width: 85%;
     }
 
 }
@@ -153,15 +169,15 @@ img {
     margin-bottom: 10px;
 }
 
-
 .introModal fieldset {
-    padding: 10px;
+    padding: 10px 10px 30px 10px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     margin-bottom: 10px;
     font-size: 1.5rem;
     z-index: 100;
+    position: relative;
 }
 
 .introModal fieldset div {
@@ -186,4 +202,16 @@ img {
     border: 2px solid #000;
     margin: 0 auto;
     font-family: 'Creepster';
+    height: 40px;
+
+    @media screen and (max-width: 430px) {
+        width: 75%;
+    }
+}
+
+#startGameBtn {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
 }

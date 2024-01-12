@@ -28,9 +28,8 @@
     <img src="/assests/lives.png" id="live" />
     <div id="introContainer">
       <div id="toDoSection" class="noteSections">
-        <p class="txt">
-          Collide with enemy under attack mode to score atleast 75 bones
-        </p>
+        <p class="txt">Hit the enemy with attack mode to score 75 🦴</p>
+        <canvas id="middleCanvas"></canvas>
       </div>
       <div id="ribbonSection" class="noteSections">
         <canvas id="upperCanvas" class="ribbonCanvas"></canvas>
@@ -59,11 +58,10 @@
             <input type="radio" name="mode" id="hard" value="2" />
           </div>
           <p id="modeInfo"></p>
+          <button type="button" id="startGameBtn" class="modalBtns">
+            Start Game
+          </button>
         </fieldset>
-
-        <button type="button" id="startGameBtn" class="modalBtns">
-          Start Game
-        </button>
       </div>
     </div>
     <script type="module" src="main.js"></script>
