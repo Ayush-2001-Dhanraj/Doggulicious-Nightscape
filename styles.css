@@ -1,3 +1,4 @@
+/* global styles */
 * {
     margin: 0;
     padding: 0;
@@ -6,51 +7,33 @@
 
 body {
     background-color: rgba(0, 0, 0, 0.8);
-    font-family: 'Creepster';
+    font-family: 'Creepster', serif;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-}
-
-#canvas {
-    /* border: 1px solid #000; */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 100%;
-    max-height: 100%;
-    font-family: 'Creepster', serif;
 }
 
 img {
     display: none;
 }
 
+/* main game canvas */
+
+#canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* intro modal */
+
 #introContainer {
     height: 100vh;
     width: 100vw;
-
     position: relative;
-}
-
-.introModal {
-    width: 40%;
-    max-width: 100%;
-    padding: 10px 10px 20px 10px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-    z-index: 100;
-
-    @media screen and (max-width: 430px) {
-        width: 80%;
-    }
 }
 
 .noteSections {
@@ -58,40 +41,7 @@ img {
     z-index: -1;
 }
 
-#ribbonSection {
-    height: 50px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    position: relative;
-
-    @media screen and (max-width: 430px) {
-        width: 100%;
-    }
-}
-
-#ribbonSection .ribbonCanvas {
-    position: absolute;
-    width: 40%;
-
-    @media screen and (max-width: 430px) {
-        max-width: 60%;
-    }
-
-}
-
-#upperCanvas {
-    bottom: 50px;
-    left: 0;
-    /* border: 5px solid red; */
-}
-
-#lowerCanvas {
-    top: 0;
-    right: 0;
-    /* border: 5px solid yellow; */
-}
+/* what to do section */
 
 #toDoSection {
     left: 50%;
@@ -128,6 +78,42 @@ img {
         bottom: 60px;
     }
 }
+
+/* ribbon divider section */
+
+#ribbonSection {
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    position: relative;
+
+    @media screen and (max-width: 430px) {
+        width: 100%;
+    }
+}
+
+#ribbonSection .ribbonCanvas {
+    position: absolute;
+    width: 40%;
+
+    @media screen and (max-width: 430px) {
+        max-width: 60%;
+    }
+}
+
+#upperCanvas {
+    bottom: 50px;
+    left: 0;
+}
+
+#lowerCanvas {
+    top: 0;
+    right: 0;
+}
+
+/* controls info section */
 
 #controlsInfo {
     left: 50%;
@@ -169,9 +155,29 @@ img {
     margin-bottom: 10px;
 }
 
-.attk {
+#controlsInfo .attk {
     background-color: #000;
     color: #fff;
+}
+
+/* game mode modal section */
+
+.introModal {
+    width: 40%;
+    max-width: 100%;
+    padding: 10px 10px 20px 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    @media screen and (max-width: 430px) {
+        width: 80%;
+    }
 }
 
 .introModal fieldset {
@@ -189,7 +195,7 @@ img {
     padding: 10px;
 }
 
-#modeInfo {
+.introModal #modeInfo {
     text-align: center;
     flex-grow: 1;
 }
@@ -220,3 +226,5 @@ img {
     left: 50%;
     transform: translateX(-50%);
 }
+
+/* style sheet ends here */
