@@ -59,19 +59,23 @@ img {
     height: 50px;
     left: 50%;
     top: 50%;
-    width: 80%;
     transform: translate(-50%, -50%);
     background-color: #fff;
     position: relative;
 
     @media screen and (max-width: 430px) {
-        width: 95%;
+        width: 100%;
     }
 }
 
 #ribbonSection .ribbonCanvas {
     position: absolute;
-    max-width: 100%;
+    width: 40%;
+
+    @media screen and (max-width: 430px) {
+        max-width: 60%;
+    }
+
 }
 
 #upperCanvas {
@@ -81,7 +85,7 @@ img {
 }
 
 #lowerCanvas {
-    top: 50px;
+    top: 0;
     right: 0;
     /* border: 5px solid yellow; */
 }

@@ -1,11 +1,12 @@
 class Enemy {
-  constructor() {
+  constructor(sizeModifier = 1) {
     this.frameX = 0;
     this.frameY = 0;
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
     this.markedForRemoval = false;
+    this.sizeModifier = sizeModifier;
   }
   update(deltaTime) {
     this.x -= this.speedX + this.game.speed;
@@ -30,15 +31,15 @@ class Enemy {
       this.height,
       this.x,
       this.y,
-      this.width,
-      this.height
+      this.width * this.sizeModifier,
+      this.height * this.sizeModifier
     );
   }
 }
 
 export class FlyingEnemy extends Enemy {
-  constructor(game) {
-    super();
+  constructor(game, sizeModifier = 1) {
+    super(sizeModifier);
     this.game = game;
     this.x = this.game.width;
     this.y = Math.random() * this.game.height * 0.5;
