@@ -52,7 +52,7 @@ window.addEventListener("load", () => {
       this.gameOver = false;
       this.lives = 5;
       this.pause = true;
-      this.winningScore = 75;
+      this.winningScore = 50;
     }
     update(deltaTime) {
       if (this.pause) return;
@@ -175,7 +175,7 @@ window.addEventListener("load", () => {
   // event listeners for game mode change events
   gameMode.forEach(function (radioButton) {
     radioButton.addEventListener("change", function () {
-      game.mode = this.value;
+      game.mode = parseInt(this.value);
       pause = true;
       game.maxSpeed = parseInt(this.value * 4) || 5;
       modeInfo.textContent = gameModeInfoTxt[this.value];

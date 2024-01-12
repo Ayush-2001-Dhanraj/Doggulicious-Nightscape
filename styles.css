@@ -169,6 +169,11 @@ img {
     margin-bottom: 10px;
 }
 
+.attk {
+    background-color: #000;
+    color: #fff;
+}
+
 .introModal fieldset {
     padding: 10px 10px 30px 10px;
     display: flex;

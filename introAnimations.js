@@ -11,6 +11,7 @@ export const introAnimation = (game) => {
   const middleCtx = middleCanvas.getContext("2d");
   const lowerCtx = lowerCanvas.getContext("2d");
 
+  // player aka dog
   const playerImage = player;
   const playerwidth = 100;
   const playerHeight = 91.3;
@@ -21,14 +22,25 @@ export const introAnimation = (game) => {
   let x = 0;
   let speedX = Math.random() * 1 + 1;
   let y = upperCanvas.height - playerHeight * playerSizeModifier;
+
+  // middle canvas plant
+  const plantEnemy = plant;
+  const plantWidth = 60;
+  const plantHeight = 87;
+  const plantSizeModifier = 1.3;
+  let frameXPlant = 0;
+
+  // lower canvas enemies
+  let enemyTimer = 0;
+  let enemySponInterval = 750;
+  let enemies = [];
+
+  // frame update variables
   let lastTime = 0;
   let fps = 20;
   let frameInterval = 1000 / fps;
   let frameTimer = 0;
   let maxFrames = 8;
-  let enemyTimer = 0;
-  let enemySponInterval = 750;
-  let enemies = [];
 
   function animateIntroCanvas(timestamp) {
     const deltaTime = timestamp - lastTime;
@@ -47,9 +59,11 @@ export const introAnimation = (game) => {
       frameTimer = 0;
       if (frameX >= maxFrames) frameX = 0;
       else if (frameXSit >= 4) frameXSit = 0;
+      else if (frameXPlant >= 1) frameXPlant = 0;
       else {
         frameX += 1;
         frameXSit += 1;
+        frameXPlant += 1;
       }
     } else frameTimer += deltaTime;
 
@@ -89,13 +103,24 @@ export const introAnimation = (game) => {
       playerHeight * playerSizeModifier
     );
     middleCtx.drawImage(
+      plantEnemy,
+      frameXPlant * plantWidth,
+      0,
+      plantWidth,
+      plantHeight,
+      middleCanvas.width * 0.6 - plantWidth * 0.5,
+      middleCanvas.height - plantHeight * plantSizeModifier,
+      plantWidth * plantSizeModifier,
+      plantHeight * plantSizeModifier
+    );
+    middleCtx.drawImage(
       playerImage,
       frameXSit * playerwidth,
       5 * playerHeight,
       playerwidth,
       playerHeight,
-      middleCanvas.width * 0.5 - playerwidth * 0.5,
-      upperCanvas.height - playerHeight,
+      middleCanvas.width * 0.4 - playerwidth * 0.5,
+      middleCanvas.height - playerHeight,
       playerwidth,
       playerHeight
     );
