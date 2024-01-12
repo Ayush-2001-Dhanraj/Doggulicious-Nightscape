@@ -9,13 +9,24 @@ import { UI } from "./ui.js";
 const gameModeInfoTxt = ["Slowest speed", "Faster speed", "Fastest game speed"];
 
 window.addEventListener("load", () => {
+  // main game canvas
   const canvas = document.getElementById("canvas");
+  // info modal canvas(s)
+  const upperCanvas = document.getElementById("upperCanvas");
+  const lowerCanvas = document.getElementById("lowerCanvas");
+  // main canvas ctx
   const ctx = canvas.getContext("2d");
+  // info modal ctx(s)
+  const upperCtx = upperCanvas.getContext("2d");
+  const lowerCtx = lowerCanvas.getContext("2d");
+  // game canvas size
   canvas.width = 1300;
   canvas.height = 500;
 
+  // if pause show info modal else start game
   let pause = true;
 
+  // Game class to handle update draw on canvas
   class Game {
     constructor(width, height) {
       this.width = width;
@@ -121,12 +132,8 @@ window.addEventListener("load", () => {
     }
   }
 
-  const game = new Game(canvas.width, canvas.height);
-  let lastTime = 0;
-
-  let startTime = new Date().getTime();
-
-  function animate(timestamp) {
+  // driver func for animating game
+  function animateGame(timestamp) {
     var endTime = new Date().getTime();
     var timeDifference = endTime - startTime;
     var secondsElapsed = timeDifference / 1000;
@@ -145,15 +152,22 @@ window.addEventListener("load", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.update(deltaTime);
     game.draw(ctx);
-    if (!game.gameOver && !game.pause && !pause) requestAnimationFrame(animate);
+    if (!game.gameOver && !game.pause && !pause)
+      requestAnimationFrame(animateGame);
   }
 
+  // restart game and reset
   function restart() {
     game.reset();
     pause = false;
     lastTime = 0;
-    animate(0);
+    animateGame(0);
   }
+
+  const game = new Game(canvas.width, canvas.height);
+  let lastTime = 0;
+
+  let startTime = new Date().getTime();
 
   const startGameBtn = document.getElementById("startGameBtn");
   const gameMode = document.getElementsByName("mode");
@@ -161,6 +175,7 @@ window.addEventListener("load", () => {
   modeInfo.textContent = gameModeInfoTxt[0];
   const introContainer = document.getElementById("introContainer");
 
+  // event listeners for game mode change events
   gameMode.forEach(function (radioButton) {
     radioButton.addEventListener("change", function () {
       game.mode = this.value;
@@ -170,6 +185,7 @@ window.addEventListener("load", () => {
     });
   });
 
+  // start game event listener
   startGameBtn.addEventListener("click", () => {
     introContainer.style.display = "none";
     restart();
