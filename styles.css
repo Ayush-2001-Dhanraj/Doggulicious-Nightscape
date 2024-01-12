@@ -77,13 +77,13 @@ img {
 #upperCanvas {
     bottom: 50px;
     left: 0;
-    border: 5px solid red;
+    /* border: 5px solid red; */
 }
 
 #lowerCanvas {
     top: 50px;
     right: 0;
-    border: 5px solid yellow;
+    /* border: 5px solid yellow; */
 }
 
 #toDoSection {

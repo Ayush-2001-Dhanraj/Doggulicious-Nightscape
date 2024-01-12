@@ -5,20 +5,17 @@ import { InputHandler } from "./input.js";
 import { Background } from "./background.js";
 import { FlyingEnemy, ClimbingEnemy, GroundEnemy } from "./enemy.js";
 import { UI } from "./ui.js";
+import { introAnimation } from "./introAnimations.js";
 
 const gameModeInfoTxt = ["Slowest speed", "Faster speed", "Fastest game speed"];
 
 window.addEventListener("load", () => {
   // main game canvas
   const canvas = document.getElementById("canvas");
-  // info modal canvas(s)
-  const upperCanvas = document.getElementById("upperCanvas");
-  const lowerCanvas = document.getElementById("lowerCanvas");
+
   // main canvas ctx
   const ctx = canvas.getContext("2d");
-  // info modal ctx(s)
-  const upperCtx = upperCanvas.getContext("2d");
-  const lowerCtx = lowerCanvas.getContext("2d");
+
   // game canvas size
   canvas.width = 1300;
   canvas.height = 500;
@@ -190,4 +187,6 @@ window.addEventListener("load", () => {
     introContainer.style.display = "none";
     restart();
   });
+
+  introAnimation();
 });
