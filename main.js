@@ -182,14 +182,9 @@ window.addEventListener("load", () => {
     });
   });
 
-  const gameContainer = document.getElementById("gameContainer");
-
-  gameContainer.style.display = "none";
-
   // start game event listener
   startGameBtn.addEventListener("click", () => {
     introContainer.style.display = "none";
-    gameContainer.style.display = "block";
     restart();
   });
 

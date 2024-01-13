@@ -45,13 +45,10 @@ export class Player {
     this.currentState.handleInput(input);
 
     // movements for x
-    if (
-      (input.includes("ArrowRight") || input.includes("swipeRight")) &&
-      this.currentState !== this.states[6]
-    )
+    if (input.includes("ArrowRight") && this.currentState !== this.states[6])
       this.speed = this.maxSpeed;
     else if (
-      (input.includes("ArrowLeft") || input.includes("swipeLeft")) &&
+      input.includes("ArrowLeft") &&
       this.currentState !== this.states[6]
     )
       this.speed = -this.maxSpeed;
