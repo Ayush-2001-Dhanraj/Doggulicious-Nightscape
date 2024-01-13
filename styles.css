@@ -239,4 +239,25 @@ img {
     transform: translateX(-50%);
 }
 
+/* mobile banner */
+
+#mobileBanner {
+    background-color: #fff;
+    position: absolute;
+    z-index: 100;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    text-align: center;
+    display: none;
+
+    @media screen and (max-width: 430px) {
+        display: block;
+    }
+
+}
+
 /* style sheet ends here */
