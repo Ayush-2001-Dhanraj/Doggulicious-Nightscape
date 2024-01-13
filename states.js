@@ -26,7 +26,12 @@ export class Sitting extends State {
     this.game.player.maxFrames = 4;
   }
   handleInput(input) {
-    if (input.includes("ArrowLeft") || input.includes("ArrowRight"))
+    if (
+      input.includes("ArrowLeft") ||
+      input.includes("swipeLeft") ||
+      input.includes("ArrowRight") ||
+      input.includes("swipeRight")
+    )
       this.game.player.setState(states.RUNNING, 1);
     else if (input.includes(" ")) this.game.player.setState(states.ROLLING, 2);
   }
@@ -48,9 +53,9 @@ export class Running extends State {
         this.game.player.y + this.game.player.height
       )
     );
-    if (input.includes("ArrowDown"))
+    if (input.includes("ArrowDown") || input.includes("swipeDown"))
       this.game.player.setState(states.SITTING, 0);
-    else if (input.includes("ArrowUp"))
+    else if (input.includes("ArrowUp") || input.includes("swipeUp"))
       this.game.player.setState(states.JUMPING, 1);
     else if (input.includes(" ")) this.game.player.setState(states.ROLLING, 2);
   }
@@ -69,7 +74,7 @@ export class Jumping extends State {
     if (!this.game.player.onGround() && this.game.player.vy >= 0)
       this.game.player.setState(states.FALLING, 1);
     else if (input.includes(" ")) this.game.player.setState(states.ROLLING, 2);
-    else if (input.includes("ArrowDown"))
+    else if (input.includes("ArrowDown") || input.includes("swipeDown"))
       this.game.player.setState(states.DIVING, 0);
   }
 }
@@ -85,7 +90,7 @@ export class Falling extends State {
   handleInput(input) {
     if (this.game.player.onGround())
       this.game.player.setState(states.RUNNING, 1);
-    else if (input.includes("ArrowDown"))
+    else if (input.includes("ArrowDown") || input.includes("swipeDown"))
       this.game.player.setState(states.DIVING, 0);
   }
 }
@@ -112,11 +117,14 @@ export class Rolling extends State {
       this.game.player.setState(states.FALLING, 1);
     else if (
       input.includes(" ") &&
-      input.includes("ArrowUp") &&
+      (input.includes("ArrowUp") || input.includes("swipeUp")) &&
       this.game.player.onGround()
     ) {
       this.game.player.vy = -27;
-    } else if (input.includes("ArrowDown") && !this.game.player.onGround())
+    } else if (
+      (input.includes("ArrowDown") || input.includes("swipeDown")) &&
+      !this.game.player.onGround()
+    )
       this.game.player.setState(states.DIVING, 0);
   }
 }
